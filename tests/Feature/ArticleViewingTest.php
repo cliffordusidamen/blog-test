@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Article;
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -11,6 +12,7 @@ use Tests\TestCase;
 class ArticleViewingTest extends TestCase
 {
     use RefreshDatabase;
+    use WithFaker;
 
     /**
      * User can view articles directory.
@@ -20,7 +22,11 @@ class ArticleViewingTest extends TestCase
      */
     public function user_can_view_articles_directory()
     {
-        Article::factory(20)->create();
+        foreach (range(1, 10) as $index) {
+            Article::factory()
+                ->has(Tag::factory())
+                ->create();
+        }
         $response = $this->get(route('articles.index'));
 
         $responseData = $response->json();
@@ -29,6 +35,10 @@ class ArticleViewingTest extends TestCase
         $this->assertArrayHasKey('data', $responseData);
         $this->assertEquals(10, count($responseData['data']));
         $this->assertArrayHasKey('links', $responseData);
+
+        $this->assertArrayHasKey('tags' , $responseData['data'][0]);
+        $this->assertTrue(count($responseData['data'][0]['tags']) > 0);
+        $this->assertArrayHasKey('name' , $responseData['data'][0]['tags'][0]);
     }
 
     /**

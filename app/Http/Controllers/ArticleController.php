@@ -15,7 +15,7 @@ class ArticleController extends Controller
      */
     public function index(): JsonResponse
     {
-        $articles = Article::paginate(10);
+        $articles = Article::with(['tags'])->paginate(10);
         return response()->json($articles);
     }
 
