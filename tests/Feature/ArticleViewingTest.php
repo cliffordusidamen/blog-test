@@ -27,7 +27,7 @@ class ArticleViewingTest extends TestCase
                 ->has(Tag::factory())
                 ->create();
         }
-        $response = $this->get(route('articles.index'));
+        $response = $this->get('api/articles');
 
         $responseData = $response->json();
 
@@ -50,7 +50,7 @@ class ArticleViewingTest extends TestCase
     public function user_can_view_article()
     {
         $article = Article::factory()->create();
-        $response = $this->get(route('articles.show', $article));
+        $response = $this->get('/api/articles/' . $article->id);
 
         $responseData = $response->json();
 
@@ -67,7 +67,7 @@ class ArticleViewingTest extends TestCase
      */
     public function not_found_status_code_is_returned_if_article_not_found()
     {
-        $response = $this->get(route('articles.show', 999));
+        $response = $this->get('/api/articles/' . 999);
         $response->assertNotFound();
     }
 
