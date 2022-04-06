@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommentRequest;
+use App\Jobs\ProcessCommentJob;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -74,5 +76,26 @@ class ArticleController extends Controller
     {
         $article = Article::findOrFail((int) $id);
         return response()->json($article);
+    }
+
+    /**
+     * Store new comment for a user on a particular article
+     *
+     * @param  int  $id
+     * @param  CommentRequest  $request
+     * @return void
+     */
+    public function comment(int $id, CommentRequest $request)
+    {
+        $article = Article::findOrFail((int) $id);
+
+        $comment = $request->user()->comments()->make([
+            'subject' => $request->subject,
+            'body' => $request->body,
+            'article_id' => $article->id,
+        ]);
+
+        ProcessCommentJob::dispatch($comment->toArray());
+        return response()->json("Your message has been successfully sent");
     }
 }

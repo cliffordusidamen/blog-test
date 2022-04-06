@@ -30,6 +30,7 @@ Route::controller(ArticleController::class)
 ->prefix('articles')
 ->group(function () {
 
-    Route::get('/', 'index')->name('index');
-    Route::get('/{article}', 'show')->name('show');
+    Route::get('/', 'index');
+    Route::get('/{article}', 'show');
+    Route::post('/{article}/comment', 'comment')->middleware('auth');
 });

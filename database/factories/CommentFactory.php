@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class TagFactory extends Factory
+class CommentFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -14,7 +14,8 @@ class TagFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->words(2, true),
+            'subject' => $this->faker->sentence(),
+            'body' => $this->faker->paragraphs(5, true),
         ];
     }
 }
