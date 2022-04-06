@@ -79,6 +79,38 @@
                     }
                 }
             }
+        },
+        "/articles/{id}/comment": {
+            "get": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Make comment on an article",
+                "description": "",
+                "operationId": "storeArticleComment",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Article ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -128,7 +160,19 @@
                     "published_at": {
                         "title": "Published datetime",
                         "description": "Published datetime",
-                        "format": "datetime",
+                        "format": "string",
+                        "example": "2022-04-05 14:04:34"
+                    },
+                    "created_at": {
+                        "title": "Created datetime",
+                        "description": "Created datetime",
+                        "format": "string",
+                        "example": "2022-04-05 13:04:34"
+                    },
+                    "updated_at": {
+                        "title": "Updated datetime",
+                        "description": "Date time it was last updated",
+                        "format": "string",
                         "example": "2022-04-05 16:04:34"
                     }
                 },

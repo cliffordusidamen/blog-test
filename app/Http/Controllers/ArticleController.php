@@ -80,7 +80,37 @@ class ArticleController extends Controller
 
     /**
      * Store new comment for a user on a particular article
-     *
+     * 
+     * @OA\Get(
+     *     path="/articles/{id}/comment",
+     *     operationId="storeArticleComment",
+     *     tags={"Articles"},
+     *     summary="Make comment on an article",
+     *     description="",
+     *     @OA\Parameter(
+     *         name="id",
+     *         description="Article ID",
+     *         required=true,
+     *         in="path",
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *     ),
+     * 
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found"
+     *     ),
+     * 
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad Request"
+     *     ),
+     * )
      * @param  int  $id
      * @param  CommentRequest  $request
      * @return void
