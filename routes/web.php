@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +16,18 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::group(['prefix' => 'articles'], function () {
+    Route::get('/', 'ArticleController@index');
+    Route::get('/{article}', 'ArticleController@show');
+});
+
+Route::controller(ArticleController::class)
+->prefix('articles')
+->name('articles.')
+->group(function () {
+
+    Route::get('/', 'index')->name('index');
+    Route::get('/{article}', 'show')->name('show');
 });
